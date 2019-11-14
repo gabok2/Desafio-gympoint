@@ -56,7 +56,6 @@ class StudentsController {
     const { email } = req.body;
 
     const student = await Students.findByPk(req.params.id);
-    console.log(req.params.id);
 
     if (email !== student.email) {
       const studentExists = await Students.findOne({
