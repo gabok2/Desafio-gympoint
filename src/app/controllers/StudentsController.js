@@ -9,7 +9,7 @@ class StudentsController {
       email: Yup.string()
         .email()
         .required(),
-      age: Yup.date().required(),
+      age: Yup.number().required(),
       weight: Yup.number().required(),
       height: Yup.number().required(),
     });
@@ -57,7 +57,11 @@ class StudentsController {
 
     const student = await Students.findByPk(req.params.id);
 
-    if (email && email !== student.email) {
+    if (!student) {
+      return res.status(400).json({ error: 'Student não existe' });
+    }
+
+    if (email === student.email) {
       const studentExists = await Students.findOne({
         where: { email },
       });
